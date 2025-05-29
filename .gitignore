@@ -1,5 +1,8 @@
 email.properties
 
+# JUnit test resources
+demoMailTemplate.txt
+
 HELP.md
 target/
 !.mvn/wrapper/maven-wrapper.jar
