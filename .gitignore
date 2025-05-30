@@ -1,3 +1,7 @@
+# Only used for testing
+CompanyList.csv
+.idea
+
 target/
 pom.xml.tag
 pom.xml.releaseBackup
