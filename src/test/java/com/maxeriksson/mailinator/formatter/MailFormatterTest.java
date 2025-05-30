@@ -12,14 +12,12 @@ public class MailFormatterTest {
 
     private static MailFormatter mailFormatter;
 
-    private static String filePath;
     private static List<String> mailTemplate;
 
     @BeforeAll
     public static void setUp() {
-        mailFormatter = new MailFormatter();
+        mailFormatter = new MailFormatter("demoMailTemplate.txt");
 
-        filePath = "demoMailTemplate.txt";
         mailTemplate =
                 Arrays.asList(
                         "Hello ${contactPerson}",
@@ -32,7 +30,7 @@ public class MailFormatterTest {
     @Test
     public void readMailTemplateTest() {
         List<String> expected = mailTemplate;
-        List<String> actual = mailFormatter.readMailTemplate(filePath);
+        List<String> actual = mailFormatter.readMailTemplate();
         assertArrayEquals(expected.toArray(), actual.toArray());
     }
 }

@@ -8,16 +8,21 @@ import java.util.Scanner;
 
 public class MailFormatter {
 
-    public List<String> readMailTemplate(String filePath) {
+    private File mailDraft;
+
+    public MailFormatter(String mailDraftFilePath) {
+        mailDraft = new File(mailDraftFilePath);
+    }
+
+    public List<String> readMailTemplate() {
         List<String> mailTemplate = new ArrayList<>();
 
-        File file = new File(filePath);
-        try (Scanner fileReader = new Scanner(file)) {
+        try (Scanner fileReader = new Scanner(mailDraft)) {
             while (fileReader.hasNextLine()) {
                 mailTemplate.add(fileReader.nextLine());
             }
         } catch (FileNotFoundException e) {
-            System.out.println("File path not found: " + filePath);
+            throw new RuntimeException("File path not found: " + mailDraft.getPath());
         }
 
         return mailTemplate;
