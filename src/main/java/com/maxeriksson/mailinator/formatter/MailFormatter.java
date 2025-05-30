@@ -10,12 +10,20 @@ public class MailFormatter {
 
     private File mailDraft;
 
+    private final String SKIP_LINE_INDICATOR = "!{skip}";
+
     public MailFormatter(String mailDraftFilePath) {
         mailDraft = new File(mailDraftFilePath);
     }
 
     public List<String> formatMailDraft(CompanyMailDetails mailDetails) {
-        List<String> formattedMail = readMailTemplate();
+        List<String> formattedMail = new ArrayList<>();
+        List<String> mailDraft = readMailTemplate();
+        for (String line : mailDraft) {
+            String formattedLine = replaceTemplateTag(line, mailDetails);
+            if (formattedLine.equals(SKIP_LINE_INDICATOR)) continue;
+            formattedMail.add(formattedLine);
+        }
 
         return formattedMail;
     }
@@ -32,5 +40,13 @@ public class MailFormatter {
         }
 
         return mailTemplate;
+    }
+
+    public String replaceTemplateTag(String text, CompanyMailDetails values) {
+        return text.replace("${name}", values.getName())
+                .replace("${contactPerson}", values.getContactPerson())
+                .replace(
+                        "${optionalParagraph}",
+                        values.getOptionalParagraph().orElse(SKIP_LINE_INDICATOR));
     }
 }
