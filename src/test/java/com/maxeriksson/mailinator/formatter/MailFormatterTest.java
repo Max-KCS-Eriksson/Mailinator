@@ -30,19 +30,9 @@ public class MailFormatterTest {
     }
 
     @Test
-    public void readMailTemplateTestLength() {
+    public void readMailTemplateTest() {
         List<String> expected = mailTemplate;
         List<String> actual = mailFormatter.readMailTemplate(filePath);
         assertArrayEquals(expected.toArray(), actual.toArray());
-    }
-
-    @Test
-    public void readMailTemplateTestContent() {
-        List<String> readContent = mailFormatter.readMailTemplate(filePath);
-        for (int i = 0; i < mailTemplate.size(); i++) {
-            String expected = mailTemplate.get(i);
-            String actual = readContent.get(i);
-            assertEquals(expected, actual);
-        }
     }
 }
