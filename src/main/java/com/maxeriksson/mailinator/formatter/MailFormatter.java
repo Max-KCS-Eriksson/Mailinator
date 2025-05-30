@@ -8,18 +8,45 @@ import java.util.Scanner;
 
 public class MailFormatter {
 
-    public List<String> readMailTemplate(String filePath) {
+    private File mailDraft;
+
+    private final String SKIP_LINE_INDICATOR = "!{skip}";
+
+    public MailFormatter(String mailDraftFilePath) {
+        mailDraft = new File(mailDraftFilePath);
+    }
+
+    public List<String> formatMailDraft(CompanyMailDetails mailDetails) {
+        List<String> formattedMail = new ArrayList<>();
+        List<String> mailDraft = readMailTemplate();
+        for (String line : mailDraft) {
+            String formattedLine = replaceTemplateTag(line, mailDetails);
+            if (formattedLine.equals(SKIP_LINE_INDICATOR)) continue;
+            formattedMail.add(formattedLine);
+        }
+
+        return formattedMail;
+    }
+
+    public List<String> readMailTemplate() {
         List<String> mailTemplate = new ArrayList<>();
 
-        File file = new File(filePath);
-        try (Scanner fileReader = new Scanner(file)) {
+        try (Scanner fileReader = new Scanner(mailDraft)) {
             while (fileReader.hasNextLine()) {
                 mailTemplate.add(fileReader.nextLine());
             }
         } catch (FileNotFoundException e) {
-            System.out.println("File path not found: " + filePath);
+            throw new RuntimeException("File path not found: " + mailDraft.getPath());
         }
 
         return mailTemplate;
+    }
+
+    public String replaceTemplateTag(String text, CompanyMailDetails values) {
+        return text.replace("${name}", values.getName())
+                .replace("${contactPerson}", values.getContactPerson())
+                .replace(
+                        "${optionalParagraph}",
+                        values.getOptionalParagraph().orElse(SKIP_LINE_INDICATOR));
     }
 }
