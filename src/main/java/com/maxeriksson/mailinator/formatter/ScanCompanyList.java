@@ -1,5 +1,8 @@
 package com.maxeriksson.mailinator.formatter;
 
+import com.opencsv.bean.CsvToBean;
+import com.opencsv.bean.CsvToBeanBuilder;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -11,7 +14,7 @@ public class ScanCompanyList {
         return new ArrayList<>(); // TODO: IMPLEMENT
     }
 
-    public static void CSVReaderDemo() {
+    public static void csvReaderDemo() {
         System.out.println("Reading CSV using BufferedReader!");
 
         // Path to our CSV file
@@ -45,5 +48,32 @@ public class ScanCompanyList {
             System.err.println("Error reading the CSV file: " + e.getMessage());
             e.printStackTrace();
         }
+
+        System.out.println("Now the openCSV method: \n");
     }
+
+    // Try using openCSV to map values to java objects
+    public static void processCSV() {
+//    public void processCSV(String csvFilePath) {
+        try (FileReader reader = new FileReader("CompanyList.csv")) {
+  //      try (FileReader reader = new FileReader(csvFilePath)) {
+            CsvToBean<CompanyMailDetails> csvToBean = new CsvToBeanBuilder<CompanyMailDetails>(reader)
+                    .withType(CompanyMailDetails.class)
+                    .withSeparator('$')
+                    .withIgnoreLeadingWhiteSpace(true)
+                    .build();
+
+            List<CompanyMailDetails> companyMailDetailsList = csvToBean.parse();
+
+            for (CompanyMailDetails details : companyMailDetailsList) {
+                System.out.println(details);
+            }
+
+        } catch (IOException e) {
+            System.err.println("Error reading the CSV file: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+
 }
