@@ -14,6 +14,12 @@ public class MailFormatter {
         mailDraft = new File(mailDraftFilePath);
     }
 
+    public List<String> formatMailDraft(CompanyMailDetails mailDetails) {
+        List<String> formattedMail = readMailTemplate();
+
+        return formattedMail;
+    }
+
     public List<String> readMailTemplate() {
         List<String> mailTemplate = new ArrayList<>();
 
