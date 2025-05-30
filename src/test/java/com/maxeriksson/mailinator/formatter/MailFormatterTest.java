@@ -16,12 +16,12 @@ public class MailFormatterTest {
 
     @BeforeAll
     public static void setUp() {
-        mailFormatter = new MailFormatter("demoMailTemplate.txt");
+        mailFormatter = new MailFormatter("src/test/resources/demoMailTemplate.txt");
 
         mailTemplate =
                 Arrays.asList(
                         "Hello ${contactPerson}",
-                        "Bla bla bla",
+                        "Bla bla bla ${name}",
                         "${optionalParagraph}",
                         "Best regards,",
                         "John Doe");
