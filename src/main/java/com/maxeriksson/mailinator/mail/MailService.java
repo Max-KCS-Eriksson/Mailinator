@@ -1,13 +1,18 @@
 package com.maxeriksson.mailinator.mail;
 
 import jakarta.mail.Authenticator;
+import jakarta.mail.MessagingException;
+import jakarta.mail.Multipart;
 import jakarta.mail.PasswordAuthentication;
 import jakarta.mail.Session;
+import jakarta.mail.internet.MimeBodyPart;
+import jakarta.mail.internet.MimeMultipart;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Optional;
 import java.util.Properties;
 
@@ -44,5 +49,27 @@ public class MailService {
         settings.put("mail.smtp.port", "587");
         settings.put("mail.smtp.starttls.enable", "true");
         return settings;
+    }
+
+    private Multipart createMultipartContent(String text) {
+        Multipart multipart = new MimeMultipart();
+
+        try {
+            MimeBodyPart textPart = new MimeBodyPart();
+            textPart.setText(text);
+            multipart.addBodyPart(textPart);
+
+            if (ATTACHMENT.isPresent()) {
+                MimeBodyPart attachmentPart = new MimeBodyPart();
+                attachmentPart.attachFile(ATTACHMENT.get());
+                multipart.addBodyPart(attachmentPart);
+            }
+        } catch (IOException e) {
+            String pathToAttachment = ATTACHMENT.get().getPath();
+            throw new RuntimeException("Failed attaching file to email: " + pathToAttachment, e);
+        } catch (MessagingException e) {
+            throw new RuntimeException("Failed to create content of email", e);
+        }
+        return multipart;
     }
 }
