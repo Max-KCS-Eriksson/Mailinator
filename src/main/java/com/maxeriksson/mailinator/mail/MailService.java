@@ -7,6 +7,8 @@ import jakarta.mail.Session;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
+import java.util.Optional;
 import java.util.Properties;
 
 @Service
@@ -14,9 +16,12 @@ public class MailService {
 
     private final String SENDER;
     private final Session SESSION;
+    private final Optional<File> ATTACHMENT;
 
     public MailService(
-            @Value("${email.sender}") String email, @Value("${email.password}") String password) {
+            @Value("${email.sender}") String email,
+            @Value("${email.password}") String password,
+            @Value("${email.attachment}") String pathToAttachment) {
         this.SENDER = email;
         this.SESSION =
                 Session.getInstance(
@@ -26,6 +31,10 @@ public class MailService {
                                 return new PasswordAuthentication(email, password);
                             }
                         });
+        this.ATTACHMENT =
+                (!pathToAttachment.isBlank())
+                        ? Optional.of(new File(pathToAttachment))
+                        : Optional.empty();
     }
 
     private Properties setSmtpSettings() {
