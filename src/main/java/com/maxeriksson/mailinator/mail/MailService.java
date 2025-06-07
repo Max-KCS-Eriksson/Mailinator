@@ -27,6 +27,7 @@ public class MailService {
     private final String SENDER;
     private final Session SESSION;
     private final Optional<File> ATTACHMENT;
+    private static final int ATTACHMENT_INDEX = 1;
 
     public MailService(
             @Value("${email.sender}") String email,
@@ -85,7 +86,7 @@ public class MailService {
             if (ATTACHMENT.isPresent()) {
                 MimeBodyPart attachmentPart = new MimeBodyPart();
                 attachmentPart.attachFile(ATTACHMENT.get());
-                multipart.addBodyPart(attachmentPart);
+                multipart.addBodyPart(attachmentPart, ATTACHMENT_INDEX);
             }
         } catch (IOException e) {
             String pathToAttachment = ATTACHMENT.get().getPath();
