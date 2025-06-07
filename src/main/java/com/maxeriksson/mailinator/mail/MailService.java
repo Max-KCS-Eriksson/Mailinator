@@ -1,11 +1,16 @@
 package com.maxeriksson.mailinator.mail;
 
 import jakarta.mail.Authenticator;
+import jakarta.mail.Message;
 import jakarta.mail.MessagingException;
 import jakarta.mail.Multipart;
 import jakarta.mail.PasswordAuthentication;
 import jakarta.mail.Session;
+import jakarta.mail.Transport;
+import jakarta.mail.internet.AddressException;
+import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeBodyPart;
+import jakarta.mail.internet.MimeMessage;
 import jakarta.mail.internet.MimeMultipart;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -49,6 +54,24 @@ public class MailService {
         settings.put("mail.smtp.port", "587");
         settings.put("mail.smtp.starttls.enable", "true");
         return settings;
+    }
+
+    public void send(String recipient, String subject, String text) {
+        Message message = new MimeMessage(SESSION);
+        try {
+            message.setFrom(new InternetAddress(SENDER));
+            message.setRecipient(Message.RecipientType.TO, new InternetAddress(recipient));
+
+            message.setSubject(subject);
+            Multipart content = createMultipartContent(text);
+            message.setContent(content);
+
+            Transport.send(message);
+        } catch (AddressException e) {
+            throw new RuntimeException("Failed to parse email address", e);
+        } catch (MessagingException e) {
+            throw new RuntimeException("Failed to send email", e);
+        }
     }
 
     private Multipart createMultipartContent(String text) {
