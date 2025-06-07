@@ -13,6 +13,8 @@ import jakarta.mail.internet.MimeBodyPart;
 import jakarta.mail.internet.MimeMessage;
 import jakarta.mail.internet.MimeMultipart;
 
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +24,7 @@ import java.util.Optional;
 import java.util.Properties;
 
 @Service
+@Slf4j
 public class MailService {
 
     private final String SENDER;
@@ -68,6 +71,7 @@ public class MailService {
             message.setContent(content);
 
             Transport.send(message);
+            logSentMessage(message, content);
         } catch (AddressException e) {
             throw new RuntimeException("Failed to parse email address", e);
         } catch (MessagingException e) {
@@ -95,5 +99,13 @@ public class MailService {
             throw new RuntimeException("Failed to create content of email", e);
         }
         return multipart;
+    }
+
+    private void logSentMessage(Message message, Multipart content) throws MessagingException {
+        String logNote = "\nEmail sent to: " + message.getRecipients(Message.RecipientType.TO)[0];
+        if (ATTACHMENT.isPresent()) {
+            logNote += "\n   attachment: " + content.getBodyPart(ATTACHMENT_INDEX).getFileName();
+        }
+        log.info(logNote);
     }
 }
