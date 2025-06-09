@@ -1,5 +1,7 @@
 package com.maxeriksson.mailinator.formatter;
 
+import org.apache.commons.lang3.ObjectUtils;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -30,7 +32,6 @@ public class MailFormatter {
 
     public List<String> readMailTemplate() {
         List<String> mailTemplate = new ArrayList<>();
-
         try (Scanner fileReader = new Scanner(mailDraft)) {
             while (fileReader.hasNextLine()) {
                 mailTemplate.add(fileReader.nextLine());
@@ -38,7 +39,6 @@ public class MailFormatter {
         } catch (FileNotFoundException e) {
             throw new RuntimeException("File path not found: " + mailDraft.getPath());
         }
-
         return mailTemplate;
     }
 
@@ -47,6 +47,6 @@ public class MailFormatter {
                 .replace("${contactPerson}", values.getContactPerson())
                 .replace(
                         "${optionalParagraph}",
-                        values.getOptionalParagraph().orElse(SKIP_LINE_INDICATOR));
+                        values.getOptionalParagraph() != null ? values.getOptionalParagraph() : SKIP_LINE_INDICATOR);
     }
 }

@@ -6,44 +6,31 @@ import com.opencsv.bean.CsvBindByPosition;
 import java.util.Optional;
 
 public class CompanyMailDetails {
- //   @CsvBindByPosition(position = 0)
-    @CsvBindByName(column = "name")
+    @CsvBindByName
     private String name;
- //   @CsvBindByPosition(position = 1)
-    @CsvBindByName(column = "contactPerson")
+    @CsvBindByName
     private String contactPerson;
-    //   @CsvBindByPosition(position = 2)
-    @CsvBindByName(column = "contactEmail")
+    @CsvBindByName
     private String contactEmail;
-//    @CsvBindByPosition(position = 3)
-    @CsvBindByName(column = "optionalParagraph")
-    private Optional<String> optionalParagraph;
+    @CsvBindByName
+    private String optionalParagraph;
 
-    public CompanyMailDetails(String name, String contactPerson, String contactEmail) {
+    public CompanyMailDetails() {
     }
 
-   /* public CompanyMailDetails(String name, String contactPerson, String contactEmail) {
-        this(name, contactPerson, contactEmail, Optional.empty());
-    }*/
+    public CompanyMailDetails(String name, String contactPerson, String contactEmail) {
+        this(name, contactPerson, contactEmail, "");
+    }
 
     public CompanyMailDetails(
             String name,
             String contactPerson,
             String contactEmail,
-            Optional<String> optionalParagraph) {
+            String optionalParagraph) {
         this.name = name;
         this.contactPerson = contactPerson;
         this.contactEmail = contactEmail;
         this.optionalParagraph = optionalParagraph;
-    }
-
-    public String toString() {
-        return "CompanyMailDetails{" +
-                "name='" + name + '\'' +
-                ", contactPerson='" + contactPerson + '\'' +
-                ", contactEmail='" + contactEmail + '\'' +
-                ", optionalParagraph=" + optionalParagraph +
-                '}';
     }
 
     public String getName() {
@@ -70,11 +57,21 @@ public class CompanyMailDetails {
         this.contactEmail = contactEmail;
     }
 
-    public Optional<String> getOptionalParagraph() {
+    public String getOptionalParagraph() {
         return optionalParagraph;
     }
 
-    public void setOptionalParagraph(Optional<String> optionalParagraph) {
+    public void setOptionalParagraph(String optionalParagraph) {
         this.optionalParagraph = optionalParagraph;
     }
+
+    public String toString() {
+        return "CompanyMailDetails{" +
+                "name='" + name + '\'' +
+                ", contactPerson='" + contactPerson + '\'' +
+                ", contactEmail='" + contactEmail + '\'' +
+                ", optionalParagraph=" + optionalParagraph +
+                '}';
+    }
+
 }
