@@ -1,32 +1,21 @@
 package com.maxeriksson.mailinator.formatter;
 
 import com.opencsv.bean.CsvBindByName;
-import com.opencsv.bean.CsvBindByPosition;
-
-import java.util.Optional;
 
 public class CompanyMailDetails {
-    @CsvBindByName
-    private String name;
-    @CsvBindByName
-    private String contactPerson;
-    @CsvBindByName
-    private String contactEmail;
-    @CsvBindByName
-    private String optionalParagraph;
+    @CsvBindByName private String name;
+    @CsvBindByName private String contactPerson;
+    @CsvBindByName private String contactEmail;
+    @CsvBindByName private String optionalParagraph;
 
-    public CompanyMailDetails() {
-    }
+    public CompanyMailDetails() {}
 
     public CompanyMailDetails(String name, String contactPerson, String contactEmail) {
         this(name, contactPerson, contactEmail, "");
     }
 
     public CompanyMailDetails(
-            String name,
-            String contactPerson,
-            String contactEmail,
-            String optionalParagraph) {
+            String name, String contactPerson, String contactEmail, String optionalParagraph) {
         this.name = name;
         this.contactPerson = contactPerson;
         this.contactEmail = contactEmail;
@@ -87,12 +76,18 @@ public class CompanyMailDetails {
     }
 
     public String toString() {
-        return "CompanyMailDetails{" +
-                "name='" + name + '\'' +
-                ", contactPerson='" + contactPerson + '\'' +
-                ", contactEmail='" + contactEmail + '\'' +
-                ", optionalParagraph=" + optionalParagraph +
-                '}';
+        return "CompanyMailDetails{"
+                + "name='"
+                + name
+                + '\''
+                + ", contactPerson='"
+                + contactPerson
+                + '\''
+                + ", contactEmail='"
+                + contactEmail
+                + '\''
+                + ", optionalParagraph="
+                + optionalParagraph
+                + '}';
     }
-
 }
