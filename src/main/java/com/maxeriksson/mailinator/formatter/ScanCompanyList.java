@@ -22,15 +22,16 @@ public class ScanCompanyList {
 
     public List<CompanyMailDetails> getCompanyMailDetailList() {
         try (FileReader reader = new FileReader(csvFilePath)) {
-            CsvToBean<CompanyMailDetails> csvToBean = new CsvToBeanBuilder<CompanyMailDetails>(reader)
-                    .withType(CompanyMailDetails.class)
-                    .withSeparator(csvSeparator.toCharArray()[0])
-                    .withIgnoreLeadingWhiteSpace(true)
-                    .withThrowExceptions(false)
-                    .build();
+            CsvToBean<CompanyMailDetails> csvToBean =
+                    new CsvToBeanBuilder<CompanyMailDetails>(reader)
+                            .withType(CompanyMailDetails.class)
+                            .withSeparator(csvSeparator.toCharArray()[0])
+                            .withIgnoreLeadingWhiteSpace(true)
+                            .withThrowExceptions(false)
+                            .build();
             return csvToBean.parse();
         } catch (IOException e) {
-        throw new RuntimeException(e);
+            throw new RuntimeException(e);
         }
     }
 }
