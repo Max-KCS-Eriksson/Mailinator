@@ -1,7 +1,5 @@
 package com.maxeriksson.mailinator.formatter;
 
-import org.apache.commons.lang3.ObjectUtils;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
