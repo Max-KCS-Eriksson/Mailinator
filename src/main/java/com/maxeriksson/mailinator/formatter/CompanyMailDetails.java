@@ -1,23 +1,21 @@
 package com.maxeriksson.mailinator.formatter;
 
-import java.util.Optional;
+import com.opencsv.bean.CsvBindByName;
 
 public class CompanyMailDetails {
+    @CsvBindByName private String name;
+    @CsvBindByName private String contactPerson;
+    @CsvBindByName private String contactEmail;
+    @CsvBindByName private String optionalParagraph;
 
-    private String name;
-    private String contactPerson;
-    private String contactEmail;
-    private Optional<String> optionalParagraph;
+    public CompanyMailDetails() {}
 
     public CompanyMailDetails(String name, String contactPerson, String contactEmail) {
-        this(name, contactPerson, contactEmail, Optional.empty());
+        this(name, contactPerson, contactEmail, "");
     }
 
     public CompanyMailDetails(
-            String name,
-            String contactPerson,
-            String contactEmail,
-            Optional<String> optionalParagraph) {
+            String name, String contactPerson, String contactEmail, String optionalParagraph) {
         this.name = name;
         this.contactPerson = contactPerson;
         this.contactEmail = contactEmail;
@@ -48,11 +46,48 @@ public class CompanyMailDetails {
         this.contactEmail = contactEmail;
     }
 
-    public Optional<String> getOptionalParagraph() {
+    public String getOptionalParagraph() {
         return optionalParagraph;
     }
 
-    public void setOptionalParagraph(Optional<String> optionalParagraph) {
+    public void setOptionalParagraph(String optionalParagraph) {
         this.optionalParagraph = optionalParagraph;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (getClass() != obj.getClass()) return false;
+        CompanyMailDetails other = (CompanyMailDetails) obj;
+        if (name == null) {
+            if (other.name != null) return false;
+        } else if (!name.equals(other.name)) return false;
+        if (contactPerson == null) {
+            if (other.contactPerson != null) return false;
+        } else if (!contactPerson.equals(other.contactPerson)) return false;
+        if (contactEmail == null) {
+            if (other.contactEmail != null) return false;
+        } else if (!contactEmail.equals(other.contactEmail)) return false;
+        if (optionalParagraph == null) {
+            if (other.optionalParagraph != null) return false;
+        } else if (!optionalParagraph.equals(other.optionalParagraph)) return false;
+        return true;
+    }
+
+    public String toString() {
+        return "CompanyMailDetails{"
+                + "name='"
+                + name
+                + '\''
+                + ", contactPerson='"
+                + contactPerson
+                + '\''
+                + ", contactEmail='"
+                + contactEmail
+                + '\''
+                + ", optionalParagraph="
+                + optionalParagraph
+                + '}';
     }
 }

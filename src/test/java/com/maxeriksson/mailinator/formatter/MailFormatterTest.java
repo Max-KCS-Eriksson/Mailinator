@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 public class MailFormatterTest {
 
@@ -38,13 +37,12 @@ public class MailFormatterTest {
     @Test
     public void formatMailDraftTest() {
         CompanyMailDetails mailDetails =
-                new CompanyMailDetails(
-                        "Company AB", "John Doe", "john.doe@company.se", Optional.of("Foo bar"));
+                new CompanyMailDetails("Company AB", "John Doe", "john.doe@company.se", "Foo bar");
         List<String> expected =
                 Arrays.asList(
                         "Hello " + mailDetails.getContactPerson(),
                         "Bla bla bla " + mailDetails.getName(),
-                        mailDetails.getOptionalParagraph().get(),
+                        mailDetails.getOptionalParagraph(),
                         "Best regards,",
                         "John Doe");
         List<String> actual = mailFormatter.formatMailDraft(mailDetails);

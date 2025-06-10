@@ -30,7 +30,6 @@ public class MailFormatter {
 
     public List<String> readMailTemplate() {
         List<String> mailTemplate = new ArrayList<>();
-
         try (Scanner fileReader = new Scanner(mailDraft)) {
             while (fileReader.hasNextLine()) {
                 mailTemplate.add(fileReader.nextLine());
@@ -38,7 +37,6 @@ public class MailFormatter {
         } catch (FileNotFoundException e) {
             throw new RuntimeException("File path not found: " + mailDraft.getPath());
         }
-
         return mailTemplate;
     }
 
@@ -47,6 +45,8 @@ public class MailFormatter {
                 .replace("${contactPerson}", values.getContactPerson())
                 .replace(
                         "${optionalParagraph}",
-                        values.getOptionalParagraph().orElse(SKIP_LINE_INDICATOR));
+                        !values.getOptionalParagraph().isBlank()
+                                ? values.getOptionalParagraph()
+                                : SKIP_LINE_INDICATOR);
     }
 }
