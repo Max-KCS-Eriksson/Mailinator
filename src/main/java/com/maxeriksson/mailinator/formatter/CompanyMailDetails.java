@@ -65,6 +65,27 @@ public class CompanyMailDetails {
         this.optionalParagraph = optionalParagraph;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (getClass() != obj.getClass()) return false;
+        CompanyMailDetails other = (CompanyMailDetails) obj;
+        if (name == null) {
+            if (other.name != null) return false;
+        } else if (!name.equals(other.name)) return false;
+        if (contactPerson == null) {
+            if (other.contactPerson != null) return false;
+        } else if (!contactPerson.equals(other.contactPerson)) return false;
+        if (contactEmail == null) {
+            if (other.contactEmail != null) return false;
+        } else if (!contactEmail.equals(other.contactEmail)) return false;
+        if (optionalParagraph == null) {
+            if (other.optionalParagraph != null) return false;
+        } else if (!optionalParagraph.equals(other.optionalParagraph)) return false;
+        return true;
+    }
+
     public String toString() {
         return "CompanyMailDetails{" +
                 "name='" + name + '\'' +
