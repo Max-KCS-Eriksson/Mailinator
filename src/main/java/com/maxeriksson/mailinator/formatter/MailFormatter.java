@@ -47,6 +47,8 @@ public class MailFormatter {
                 .replace("${contactPerson}", values.getContactPerson())
                 .replace(
                         "${optionalParagraph}",
-                        values.getOptionalParagraph() != null ? values.getOptionalParagraph() : SKIP_LINE_INDICATOR);
+                        !values.getOptionalParagraph().isBlank()
+                                ? values.getOptionalParagraph()
+                                : SKIP_LINE_INDICATOR);
     }
 }
