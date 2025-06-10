@@ -1,0 +1,5 @@
+Hello ${contactPerson}
+Bla bla bla ${name}
+${optionalParagraph}
+Best regards,
+John Doe
