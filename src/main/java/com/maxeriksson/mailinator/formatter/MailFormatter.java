@@ -1,5 +1,7 @@
 package com.maxeriksson.mailinator.formatter;
 
+import org.springframework.beans.factory.annotation.Value;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -12,7 +14,7 @@ public class MailFormatter {
 
     private final String SKIP_LINE_INDICATOR = "!{skip}";
 
-    public MailFormatter(String mailDraftFilePath) {
+    public MailFormatter(@Value("${email.draft}") String mailDraftFilePath) {
         mailDraft = new File(mailDraftFilePath);
     }
 
@@ -41,7 +43,7 @@ public class MailFormatter {
     }
 
     public String replaceTemplateTag(String text, CompanyMailDetails values) {
-        return text.replace("${name}", values.getName())
+        return text.replace("${company}", values.getCompany())
                 .replace("${contactPerson}", values.getContactPerson())
                 .replace(
                         "${optionalParagraph}",
