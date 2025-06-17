@@ -4,10 +4,17 @@ import com.opencsv.bean.CsvBindByName;
 
 public class CompanyMailDetails {
 
-    @CsvBindByName private String company;
-    @CsvBindByName private String contactPerson;
-    @CsvBindByName private String contactEmail;
-    @CsvBindByName private String optionalParagraph;
+    @CsvBindByName(column = "")
+    private String company;
+
+    @CsvBindByName(column = "contact person")
+    private String contactPerson;
+
+    @CsvBindByName(column = "contact email")
+    private String contactEmail;
+
+    @CsvBindByName(column = "optional paragraph")
+    private String optionalParagraph;
 
     public CompanyMailDetails() {}
 
