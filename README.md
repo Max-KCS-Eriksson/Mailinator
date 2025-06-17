@@ -1,27 +1,28 @@
 # Mailinator
 
-## Email Settings
+## Settings
 
-User setting are specified in `src/main/resources/email.properties`.
+User settings are specified in `src/main/resources/email.properties`.
 First create above file in the mentioned path, and fill in below properties.
 
-### Login
+### Email
+
+##### Login
 
 ```
 EMAIL_SENDER=<your_email_address>
 EMAIL_PASSWORD=<your_password>
 ```
 
-### Email Draft
+##### Draft
 
-The specified email draft will be sent to all recipients listed in the `contactEmail`
-column in the CSV file specified in the `EMAIL_RECIPIENT_LIST=<path_to_file>` setting.
+The specified email draft will be sent to all [listed recipients](#recipients).
 
 ```
-EMAIL_DRAFT=<path_to_email_draft>
+EMAIL_DRAFT=<path/to/file>
 ```
 
-### File attachment
+##### File attachment
 
 A File can be attached to sent email by filling in below property with a path relative
 to this application root directory.
@@ -31,10 +32,80 @@ This property can be completely omitted if not attachment is to be sent.
 EMAIL_ATTACHMENT=<path/to/file>
 ```
 
-## Email Draft Placeholders
+##### Recipients
 
-Below listed placeholders will be processed according to the column values listed in the
-CSV file specified in the `EMAIL_RECIPIENT_LIST=<path_to_file>` setting.
+Specify the path to the CSV file containing the desired email recipients as below.
+See [CSV structure](#recipient-list).
 
-Available placeholders for the draft are:
-`${name}`, `${contactPerson}`, `${optionalParagraph}`.
+```
+EMAIL_RECIPIENT_LIST=<path/to/file>
+```
+
+##### CSV separator
+
+This property can be completely omitted if "`;`" is used as the CSV separator character.
+If another character is wished to be used as a column separator, the below setting is to
+be specified.
+
+```
+EMAIL_RECIPIENT_LIST_SEPARATOR=<character>
+```
+
+## Email Draft
+
+Below listed placeholders will be processed according to the column values in the
+[recipient list](#recipients).
+
+### Placeholder tags
+
+- `${company}`
+- `${contactPerson}`
+- `${optionalParagraph}`
+
+##### Example draft
+
+```
+Hello ${contactPerson}!
+
+Nice to meet you at ${company}!
+${optionalParagraph}.
+
+Best regards,
+Jane Doe
+```
+
+## Recipient list
+
+### Column headers
+
+The CSV file is expected to contain column headers as below.
+
+```
+Company;Contact person;Contact email;Optional paragraph
+```
+
+### Column values
+
+An email will be sent for each row in the CSV file to the recipient specified in the
+`Contact email` column.
+
+[Placeholders](#email-draft) in the [email draft](#draft) are replaced for each email
+according to the [columns](#column-headers) like described below.
+
+- `${company}` is replaced with `Company`
+- `${contactPerson}` is replaced with `Contact person`
+- `${optionalParagraph}` is replaced with `Optional paragraph` if present.
+
+If the `Optional paragraph` is omitted a trailing [CSV separator](#csv-separator) is
+required on that row.
+
+##### Example columns
+
+```
+Company;Contact person;Contact email;Optional paragraph
+Foo;Jane Smith;jane.smith@foo.io;Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+Bar;John Doe;john.doe@bar.io;
+```
+
+Note that the last row omits the optional paragraph and therefore ends the row with the
+[CSV separator](#csv-separator) while the first row doesn't.

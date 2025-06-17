@@ -21,7 +21,7 @@ public class MailFormatterTest {
         mailTemplate =
                 Arrays.asList(
                         "Hello ${contactPerson}",
-                        "Bla bla bla ${name}",
+                        "Bla bla bla ${company}",
                         "${optionalParagraph}",
                         "Best regards,",
                         "John Doe");
@@ -41,7 +41,7 @@ public class MailFormatterTest {
         List<String> expected =
                 Arrays.asList(
                         "Hello " + mailDetails.getContactPerson(),
-                        "Bla bla bla " + mailDetails.getName(),
+                        "Bla bla bla " + mailDetails.getCompany(),
                         mailDetails.getOptionalParagraph(),
                         "Best regards,",
                         "John Doe");
@@ -56,7 +56,7 @@ public class MailFormatterTest {
         List<String> expected =
                 Arrays.asList(
                         "Hello " + mailDetails.getContactPerson(),
-                        "Bla bla bla " + mailDetails.getName(),
+                        "Bla bla bla " + mailDetails.getCompany(),
                         "Best regards,",
                         "John Doe");
         List<String> actual = mailFormatter.formatMailDraft(mailDetails);
