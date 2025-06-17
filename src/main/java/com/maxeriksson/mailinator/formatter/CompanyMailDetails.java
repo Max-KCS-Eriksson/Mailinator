@@ -3,6 +3,7 @@ package com.maxeriksson.mailinator.formatter;
 import com.opencsv.bean.CsvBindByName;
 
 public class CompanyMailDetails {
+
     @CsvBindByName private String name;
     @CsvBindByName private String contactPerson;
     @CsvBindByName private String contactEmail;
