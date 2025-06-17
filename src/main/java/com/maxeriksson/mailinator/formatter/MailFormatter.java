@@ -43,7 +43,7 @@ public class MailFormatter {
     }
 
     public String replaceTemplateTag(String text, CompanyMailDetails values) {
-        return text.replace("${name}", values.getName())
+        return text.replace("${company}", values.getCompany())
                 .replace("${contactPerson}", values.getContactPerson())
                 .replace(
                         "${optionalParagraph}",

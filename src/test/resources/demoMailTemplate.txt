@@ -1,5 +1,5 @@
 Hello ${contactPerson}
-Bla bla bla ${name}
+Bla bla bla ${company}
 ${optionalParagraph}
 Best regards,
 John Doe

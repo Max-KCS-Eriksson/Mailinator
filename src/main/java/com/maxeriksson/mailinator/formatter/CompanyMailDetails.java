@@ -4,31 +4,31 @@ import com.opencsv.bean.CsvBindByName;
 
 public class CompanyMailDetails {
 
-    @CsvBindByName private String name;
+    @CsvBindByName private String company;
     @CsvBindByName private String contactPerson;
     @CsvBindByName private String contactEmail;
     @CsvBindByName private String optionalParagraph;
 
     public CompanyMailDetails() {}
 
-    public CompanyMailDetails(String name, String contactPerson, String contactEmail) {
-        this(name, contactPerson, contactEmail, "");
+    public CompanyMailDetails(String company, String contactPerson, String contactEmail) {
+        this(company, contactPerson, contactEmail, "");
     }
 
     public CompanyMailDetails(
-            String name, String contactPerson, String contactEmail, String optionalParagraph) {
-        this.name = name;
+            String company, String contactPerson, String contactEmail, String optionalParagraph) {
+        this.company = company;
         this.contactPerson = contactPerson;
         this.contactEmail = contactEmail;
         this.optionalParagraph = optionalParagraph;
     }
 
-    public String getName() {
-        return name;
+    public String getCompany() {
+        return company;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setCompany(String company) {
+        this.company = company;
     }
 
     public String getContactPerson() {
@@ -61,9 +61,9 @@ public class CompanyMailDetails {
         if (obj == null) return false;
         if (getClass() != obj.getClass()) return false;
         CompanyMailDetails other = (CompanyMailDetails) obj;
-        if (name == null) {
-            if (other.name != null) return false;
-        } else if (!name.equals(other.name)) return false;
+        if (company == null) {
+            if (other.company != null) return false;
+        } else if (!company.equals(other.company)) return false;
         if (contactPerson == null) {
             if (other.contactPerson != null) return false;
         } else if (!contactPerson.equals(other.contactPerson)) return false;
@@ -78,8 +78,8 @@ public class CompanyMailDetails {
 
     public String toString() {
         return "CompanyMailDetails{"
-                + "name='"
-                + name
+                + "company='"
+                + company
                 + '\''
                 + ", contactPerson='"
                 + contactPerson
