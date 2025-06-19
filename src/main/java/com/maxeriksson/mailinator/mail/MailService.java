@@ -37,26 +37,31 @@ public class MailService {
             @Value("${email.password}") String password,
             @Value("${email.attachment}") String pathToAttachment) {
         this.SENDER = email;
+
+        String smtpHost = "smtp.office365.com";
+        int smtpPort = 587;
         this.SESSION =
                 Session.getInstance(
-                        setSmtpSettings(),
+                        setSmtpSettings(smtpHost, smtpPort),
                         new Authenticator() {
                             protected PasswordAuthentication getPasswordAuthentication() {
                                 return new PasswordAuthentication(email, password);
                             }
                         });
+
         this.ATTACHMENT =
                 (!pathToAttachment.isBlank())
                         ? Optional.of(new File(pathToAttachment))
                         : Optional.empty();
     }
 
-    private Properties setSmtpSettings() {
+    private Properties setSmtpSettings(String host, int port) {
         Properties settings = new Properties();
         settings.put("mail.smtp.auth", "true");
-        settings.put("mail.smtp.host", "smtp.office365.com");
-        settings.put("mail.smtp.port", "587");
+        settings.put("mail.smtp.host", host);
+        settings.put("mail.smtp.port", Integer.toString(port));
         settings.put("mail.smtp.starttls.enable", "true");
+        settings.put("mail.smtp.localhost", "localhost");
         return settings;
     }
 
