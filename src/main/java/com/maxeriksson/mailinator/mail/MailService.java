@@ -38,7 +38,7 @@ public class MailService {
             @Value("${email.attachment}") String pathToAttachment) {
         this.SENDER = email;
 
-        String smtpHost = "smtp.office365.com";
+        String smtpHost = "smtp.gmail.com";
         int smtpPort = 587;
         this.SESSION =
                 Session.getInstance(
