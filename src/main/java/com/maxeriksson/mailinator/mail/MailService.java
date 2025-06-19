@@ -48,6 +48,7 @@ public class MailService {
                                 return new PasswordAuthentication(email, password);
                             }
                         });
+        connectToSmtpHost(smtpHost, smtpPort, email, password);
 
         this.ATTACHMENT =
                 (!pathToAttachment.isBlank())
@@ -63,6 +64,14 @@ public class MailService {
         settings.put("mail.smtp.starttls.enable", "true");
         settings.put("mail.smtp.localhost", "localhost");
         return settings;
+    }
+
+    private void connectToSmtpHost(String smtpHost, int smtpPort, String email, String password) {
+        try {
+            this.SESSION.getTransport().connect(smtpHost, smtpPort, email, password);
+        } catch (MessagingException e) {
+            throw new RuntimeException("Failed to connect to SMTP server", e);
+        }
     }
 
     public void send(String recipient, String subject, String text) {
