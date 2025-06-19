@@ -14,6 +14,17 @@ EMAIL_SENDER=<your_email_address>
 EMAIL_PASSWORD=<your_password>
 ```
 
+**NOTE**: Currently only working for Gmail accounts using
+[generated application passwords](#gmail-application-password).
+
+###### Gmail application password
+
+1. Log in and confirm 2-Step Verification is enabled
+2. Go to: https://myaccount.google.com/apppasswords
+3. Enter a name of your liking for the application
+4. Click Generate
+5. Use the shown generated password as the value for the `EMAIL_PASSWORD` property
+
 ##### Draft
 
 The specified email draft will be sent to all [listed recipients](#recipients).
