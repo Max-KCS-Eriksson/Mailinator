@@ -18,13 +18,17 @@ public class MailFormatter {
         mailDraft = new File(mailDraftFilePath);
     }
 
-    public List<String> formatMailDraft(CompanyMailDetails mailDetails) {
-        List<String> formattedMail = new ArrayList<>();
+    public String formatMailDraft(CompanyMailDetails mailDetails) {
+        String formattedMail = "";
         List<String> mailDraft = readMailTemplate();
-        for (String line : mailDraft) {
+        for (int i = 0; i < mailDraft.size(); i++) {
+            String line = mailDraft.get(i);
             String formattedLine = replaceTemplateTag(line, mailDetails);
+
             if (formattedLine.equals(SKIP_LINE_INDICATOR)) continue;
-            formattedMail.add(formattedLine);
+            if (i != mailDraft.size() - 1) formattedLine += "\n";
+
+            formattedMail += formattedLine;
         }
 
         return formattedMail;
