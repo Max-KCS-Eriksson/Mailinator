@@ -38,28 +38,37 @@ public class MailFormatterTest {
     public void formatMailDraftTest() {
         CompanyMailDetails mailDetails =
                 new CompanyMailDetails("Company AB", "John Doe", "john.doe@company.se", "Foo bar");
-        List<String> expected =
-                Arrays.asList(
-                        "Hello " + mailDetails.getContactPerson(),
-                        "Bla bla bla " + mailDetails.getCompany(),
-                        mailDetails.getOptionalParagraph(),
-                        "Best regards,",
-                        "John Doe");
-        List<String> actual = mailFormatter.formatMailDraft(mailDetails);
-        assertArrayEquals(expected.toArray(), actual.toArray());
+        String expected =
+                "Hello "
+                        + mailDetails.getContactPerson()
+                        + "\n"
+                        + "Bla bla bla "
+                        + mailDetails.getCompany()
+                        + "\n"
+                        + mailDetails.getOptionalParagraph()
+                        + "\n"
+                        + "Best regards,"
+                        + "\n"
+                        + "John Doe";
+        String actual = mailFormatter.formatMailDraft(mailDetails);
+        assertEquals(expected, actual);
     }
 
     @Test
     public void formatMailDraftTestWithoutOptionalParagraph() {
         CompanyMailDetails mailDetails =
                 new CompanyMailDetails("Company AB", "John Doe", "john.doe@company.se");
-        List<String> expected =
-                Arrays.asList(
-                        "Hello " + mailDetails.getContactPerson(),
-                        "Bla bla bla " + mailDetails.getCompany(),
-                        "Best regards,",
-                        "John Doe");
-        List<String> actual = mailFormatter.formatMailDraft(mailDetails);
-        assertArrayEquals(expected.toArray(), actual.toArray());
+        String expected =
+                "Hello "
+                        + mailDetails.getContactPerson()
+                        + "\n"
+                        + "Bla bla bla "
+                        + mailDetails.getCompany()
+                        + "\n"
+                        + "Best regards,"
+                        + "\n"
+                        + "John Doe";
+        String actual = mailFormatter.formatMailDraft(mailDetails);
+        assertEquals(expected, actual);
     }
 }
